@@ -35,7 +35,7 @@ const dailyIntakeControllerForUser = async (req, res, next) => {
   const dailyIntake = {
     calories: dailyCaloriesCalculate.toFixed(),
     notAllowedProduct: result.map(
-      ({ title = "Sorry we don`t find that title", categories }) => ({
+      ({ title = "Sorry we can`t find that title", categories }) => ({
         title,
         category: categories[0],
       })
