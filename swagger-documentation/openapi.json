@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://six-outfit-backend.onrender.com",
+      "url": "https://team-outfit-slim-mom-backend.onrender.com",
       "description": "Production server"
     },
     {
