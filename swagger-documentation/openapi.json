@@ -1,0 +1,1166 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Slim Moms - OpenAPI 3.0",
+    "description": "Calorie tracker",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "team1.outfit@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://six-outfit-backend.onrender.com",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:4000",
+      "description": "test server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Endpoints",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/api/users/signup": {
+      "post": {
+        "tags": [
+          "AUTH ENDPOINTS. Register"
+        ],
+        "summary": "user registration",
+        "description": "Create new user",
+        "operationId": "CreateUser",
+        "requestBody": {
+          "description": "Here is what you write upon registration",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Register"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Register"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Register"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResp"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email in use."
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "user authentication into the system",
+        "description": "Login User",
+        "operationId": "LoginUser",
+        "requestBody": {
+          "description": "Here is what you write upon login",
+          "content": {
+            "application/json":{
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResp"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResp"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong"
+          }
+        }
+    }
+  },
+    "/api/users/current": {
+      "get": {
+        "tags": [
+          "current User"
+        ],
+        "summary": "Get all your info",
+        "description": "Request information about the current user",
+        "operationId": "CurrentUser",
+        "parameters": [
+          {
+            "name": "Bearer Token",
+            "in": "query",
+            "description": "Add Bearer Token",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUser"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid signature"
+          }
+        }
+      }
+    },
+    "/api/users/googleLogin": {
+      "post": {
+        "tags": [
+          "Google Auth"
+        ],
+        "summary": "user authenticated into the system via google service",
+        "description": "Login User",
+        "operationId": "googleLogin",
+        "requestBody": {
+          "description": "Here is what you write upon login",
+          "content": {
+            "application/json":{
+              "schema": {
+                "$ref": "#/components/schemas/GoogleLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoogleLoginResp"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current email is not registered"
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "get": {
+        "tags": [
+          "logout"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutUser",
+        "parameters": [
+          {
+            "name": "Bearer Token",
+            "in": "query",
+            "description": "Add Bearer Token",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User successfully logged out."
+          }
+        }
+      }
+    },
+    "/api/users/refresh": {
+      "post": {
+        "tags": [
+          "refresh"
+        ],
+        "summary": "Automatically update accessToken after it expires",
+        "description": "Refresh Token",
+        "operationId": "refreshToken",
+        "requestBody": {
+          "description": "Refresh Token",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshToken"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshToken"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshToken"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Refresh"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Refresh"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/api/users/password": {
+      "patch": {
+        "tags": [
+          "Save new password"
+        ],
+        "summary": "Save new password",
+        "description": "For saving the new password u need to send new password and email",
+        "operationId": "saveNewPassword",
+        "requestBody": {
+          "description": "Here you need to enter new password and email",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveNewPassword"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveNewPassword"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveNewPassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "New password saved"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/users/key/:{email}": {
+      "get": {
+        "tags": [
+          "Send secret key to email"
+        ],
+        "summary": "Send secret key to email",
+        "description": "Send key",
+        "operationId": "sendKey",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "write your email",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/users/verifyKey/:{key}": {
+      "get": {
+        "tags": [
+          "Check the secret key"
+        ],
+        "summary": "Check the secret key from your email",
+        "description": "Check key",
+        "operationId": "checkKey",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "write your secret key",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyResp"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyResp"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Wrong key"
+          }
+        }
+      }
+    },
+    "/api/products/:{product}": {
+      "get": {
+        "tags": [
+          "Get product info"
+        ],
+        "summary": "Get information about one product",
+        "description": "",
+        "operationId": "getProductData",
+        "parameters": [
+          {
+            "name": "product",
+            "in": "path",
+            "description": "Enter product name",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/api/daily-intake": {
+      "post": {
+        "tags": [
+          "Daily diet for unregistered user"
+        ],
+        "summary": "Send anthropometry to get daily calorie",
+        "description": "Get daily calorie intake and a list of non-recommended foods for an Unregistered user",
+        "operationId": "getCaloriesAndListUnregisterUser",
+        "requestBody": {
+          "description": "Here you need to enter anthropometric information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Anthropometry"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Anthropometry"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Anthropometry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnthropometryResp"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnthropometryResp"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/api/daily-intake/user": {
+      "post": {
+        "tags": [
+          "DailyDiet for registered user"
+        ],
+        "summary": "Send anthropometry to get daily calorie",
+        "description": "Get daily calorie intake and a list of non-recommended foods for a Registered user",
+        "operationId": "getCaloriesAndList",
+        "parameters": [
+          {
+            "name": "Bearer Token",
+            "in": "query",
+            "description": "Add Bearer Token",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Here you need to enter anthropometric information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Anthropometry"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Anthropometry"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Anthropometry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnthropometryResp"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnthropometryResp"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/api/dailynutritions/addmeal": {
+      "post": {
+        "tags": [
+          "Add meal"
+        ],
+        "summary": "Get info about product",
+        "description": "You send information such as the date, product, grams and get info of product's calorie count",
+        "operationId": "getCalories",
+        "parameters": [
+          {
+            "name": "Bearer Token",
+            "in": "query",
+            "description": "Add Bearer Token",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Here you add date, product, grams to diary",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddMeal"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AddMeal"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/AddMeal"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddMealResp"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddMealResp"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "This product does not exist in the database"
+          }
+        }
+      }
+    },
+    "/api/dailynutritions/getdailymeals": {
+      "post": {
+        "tags": [
+          "Get meals for current day"
+        ],
+        "summary": "Get info about product for a specific day",
+        "description": "You send information about the date, product, grams and get info about product in diary",
+        "operationId": "getDailyMeals",
+        "parameters": [
+          {
+            "name": "Bearer Token",
+            "in": "query",
+            "description": "Add Bearer Token",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Here you send the date and get products from diary",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyMeals"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyMeals"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyMeals"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddMealResp"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddMealResp"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/dailynutritions/removeMeal/:{mealId}": {
+      "delete": {
+        "tags": [
+          "Delete product by ID"
+        ],
+        "summary": "Delete purchase product by ID",
+        "description": "",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "name": "Bearer Token",
+            "in": "query",
+            "description": "Add Bearer Token",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "ID of the product that needs to be deleted",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Meal deleted"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/developers": {
+      "get": {
+        "tags": [
+          "Get developers info"
+        ],
+        "summary": "Get information about all developers",
+        "description": "",
+        "operationId": "getDevelopersData",
+        "parameters": [
+          {
+            "name": "Bearer Token",
+            "in": "query",
+            "description": "Add Bearer Token",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Developers"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Developers"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Register": {
+        "required": [
+          "email",
+          "name",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "examplename"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegisterResp": {
+        "required": [
+          "email",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "examplename"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          }
+        }
+      },
+      "Login": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResp": {
+        "required": [
+          "accessToken",
+          "dailyDiet",
+          "email",
+          "name",
+          "refreshToken",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cC"
+          },
+          "dailyDiet": {
+            "$ref": "#/components/schemas/LoginResp_dailyDiet"
+          },
+          "refreshToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp"
+          },
+          "user": {
+            "$ref": "#/components/schemas/LoginResp_user"
+          }
+        }
+      },
+      "CurrentUser": {
+        "required": [
+          "dailyDiet",
+          "email",
+          "name",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "dailyDiet": {
+            "$ref": "#/components/schemas/LoginResp_dailyDiet"
+          },
+          "user": {
+            "$ref": "#/components/schemas/LoginResp_user"
+          }
+        }
+      },
+      "GoogleLogin": {
+        "required": [
+          "googleAccessToken"
+        ],
+        "type": "object",
+        "properties": {
+          "googleAccessToken": {
+            "type": "string",
+            "example": "agshdjk12356rhkdlkf"
+          }
+        }
+      },
+      "GoogleLoginResp": {
+        "required": [
+          "accessToken",
+          "dailyDiet",
+          "email",
+          "name",
+          "refreshToken",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cC"
+          },
+          "dailyDiet": {
+            "$ref": "#/components/schemas/LoginResp_dailyDiet"
+          },
+          "refreshToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp"
+          },
+          "user": {
+            "$ref": "#/components/schemas/LoginResp_user"
+          }
+        }
+      },
+      "Refresh": {
+        "required": [
+          "accessToken",
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cC"
+          },
+          "refreshToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp"
+          }
+        }
+      },
+      "RefreshToken": {
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODU4MTUwYzE3YjAwNzdiMGYzNTYwZSIsImlhdCI6MTY2OTg0Nzc4MSwiZXhwIjoxNjcwNDUyNTgxfQ.hrIeddE7J43nyleWTHUv7CmPCz6y_iG6NVa0K-e2iBE"
+          }
+        }
+      },
+      "ElementsInArray": {
+        "type": "string",
+        "example": "Pancakes with mushrooms, Homemade noodles, ..."
+      },
+      "Categories": {
+        "type": "string",
+        "example": "meat, dairy, flour, ..."
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "5d51694802b2373622ff554d"
+          },
+          "weight": {
+            "type": "integer",
+            "format": "Int16",
+            "example": 100
+          },
+          "calories": {
+            "type": "integer",
+            "format": "Int16",
+            "example": 1312
+          },
+          "title": {
+            "type": "string",
+            "example": "Mung peas"
+          }
+        }
+      },
+      "Anthropometry": {
+        "type": "object",
+        "properties": {
+          "height": {
+            "type": "integer",
+            "format": "int16",
+            "example": 175
+          },
+          "age": {
+            "type": "integer",
+            "format": "int16",
+            "example": 35
+          },
+          "currentWeight": {
+            "type": "integer",
+            "format": "int16",
+            "example": 70
+          },
+          "desiredWeight": {
+            "type": "integer",
+            "format": "int16",
+            "example": 60
+          },
+          "bloodType": {
+            "type": "integer",
+            "format": "int16",
+            "example": 2
+          }
+        }
+      },
+      "AnthropometryResp": {
+        "type": "object",
+        "properties": {
+          "calories": {
+            "type": "integer",
+            "format": "int16"
+          },
+          "categories": {
+            "$ref": "#/components/schemas/Categories"
+          },
+          "notAllowedProduct": {
+            "$ref": "#/components/schemas/scema"
+          }
+        }
+      },
+      "scema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ElementsInArray"
+        }
+      },
+      "AddMeal": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2024/07/14"
+          },
+          "product": {
+            "type": "string",
+            "example": "Instant Oatmeal"
+          },
+          "grams": {
+            "type": "integer",
+            "format": "int16",
+            "example": 50
+          }
+        }
+      },
+      "AddMealResp": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2024/07/14"
+          },
+          "product": {
+            "type": "string",
+            "example": "Instant Oatmeal"
+          },
+          "grams": {
+            "type": "integer",
+            "format": "int16",
+            "example": 20
+          },
+          "calories": {
+            "type": "integer",
+            "format": "int16",
+            "example": 76
+          },
+          "_id": {
+            "type": "string",
+            "example": "82456fihc511fe8d81915adfgy002"
+          }
+        }
+      },
+      "DailyMeals": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2024/07/14"
+          }
+        }
+      },
+      "Developers": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "82456fihc511fe8d81915adfgy002"
+          },
+          "name": {
+            "type": "string",
+            "example": "Rene Fernandez"
+          },
+          "position": {
+            "type": "string",
+            "example": "web developer"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://gravatar.com/avatar/ed39059588a389a334d35f9c33042ed3?s=400&d=robohash&r=x"
+          }
+        }
+      },
+      "VerifyResp": {
+        "required": [
+          "email",
+          "verifiedKey"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "verifiedKey": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "SaveNewPassword": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResp_dailyDiet": {
+        "type": "object",
+        "properties": {
+          "calories": {
+            "type": "integer",
+            "format": "Int16"
+          },
+          "notAllowedProduct": {
+            "$ref": "#/components/schemas/scema"
+          }
+        }
+      },
+      "LoginResp_user": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "exampleName"
+          }
+        }
+      }
+    }
+  }
+}
