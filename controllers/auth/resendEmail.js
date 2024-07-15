@@ -1,7 +1,7 @@
 const { User } = require("../../models/user");
 const { httpError} = require("../../helpers");
 const { sendEmail} = require("../../helpers");
-const { APP_URL = "http://localhost:4000" } = process.env;
+const { APP_URL = "https://team-outfit-slim-mom-backend.onrender.com" } = process.env;
 
 const resendEmail = async (req, res, next) => {
   const { email } = req.body;
