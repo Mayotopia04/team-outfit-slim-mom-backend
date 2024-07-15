@@ -1,7 +1,17 @@
-https://github.com/Mayotopia04/Team-Outfit/pull/5
-https://github.com/Mayotopia04/Team-Outfit/pull/17
-https://github.com/Mayotopia04/Team-Outfit/pull/18
-https://github.com/Mayotopia04/Team-Outfit/pull/20
+https://github.com/Mayotopia04/team-outfit-slim-mom-backend/pull/1
+Mitch- Added all the helper files #1
 
 https://github.com/Mayotopia04/team-outfit-slim-mom-backend/pull/2
+update model developer.js #2
+
+https://github.com/Mayotopia04/team-outfit-slim-mom-backend/pull/3
+From Ruby Mateo( bhie-backend-branch): updated controllers #3
+
 https://github.com/Mayotopia04/team-outfit-slim-mom-backend/pull/4
+models dailynutrition.js #4
+
+https://github.com/Mayotopia04/team-outfit-slim-mom-backend/pull/5
+backend model/schema #5
+
+https://github.com/Mayotopia04/team-outfit-slim-mom-backend/pull/6
+john updated routes #6
