@@ -1,4 +1,3 @@
-
 const bcrypt = require("bcryptjs");
 const { User } = require("../../models");
 const { v4: uuidv4 } = require("uuid");
@@ -12,27 +11,15 @@ const register = async (req, res, next) => {
   const { name, email, password } = req.body;
 
   try {
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
 
-    // if (existingUser && existingUser.verify)  {
-    //   throw httpError(409, "Email in use");
-    // }
     if (existingUser && existingUser.verify || existingUser && !existingUser.verify)  {
       throw httpError(409, "Email in use");
     }
 
-    // if (existingUser && !existingUser.verify) {
-    //   return res.status(201).json({
-    //     user: { name: existingUser.name, email: existingUser.email },
-    //   });
-    // }
-
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = uuidv4();
 
-    // Create and save the new user
     const newUser = new User({
       name,
       email,
@@ -42,7 +29,7 @@ const register = async (req, res, next) => {
 
     await newUser.save();
     const verificationUrl=`${APP_URL}/api/users/verify/${verificationToken}`;
-    // Prepare the email
+  
     const mail = {
       to: email,
       subject: "Slim-Mom verification email",
@@ -60,15 +47,13 @@ const register = async (req, res, next) => {
     };
 
     await sendEmail(mail);
-    console.log("mail: ", mail);
 
-    // Send success response
     res.status(201).json({
       user: { name: newUser.name, email: newUser.email },
       message: "Account created successfully",
     });
   } catch (error) {
-    next(error); // Pass the error to the error-handling middleware
+    next(error); 
   }
 };
 

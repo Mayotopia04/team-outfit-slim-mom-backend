@@ -22,7 +22,6 @@ const dailyIntakeControllerForUser = async (req, res, next) => {
       categories: `$categories`,
     }
   );
-  console.log(result);
 
   if (!result) {
     throw httpError(404, "Not found");

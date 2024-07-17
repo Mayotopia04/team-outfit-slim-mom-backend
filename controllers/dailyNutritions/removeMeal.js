@@ -3,7 +3,6 @@ const { httpError } = require("../../helpers");
 
 const removeMeal = async (req, res) => {
   const { mealId } = req.params;
-  console.log(mealId);
 
   const result = await DailyNutrition.findByIdAndDelete(mealId);
   if (!result) {

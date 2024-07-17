@@ -1,5 +1,3 @@
-
-
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models");
 const { httpError } = require("../../helpers");
@@ -23,10 +21,6 @@ const getCurrentUser = async (req, res) => {
     dailyDiet: user.dailyDiet,
   });
 
-  // res.json({
-  //   token,
-  //   user: { email: user.email, subscription: user.subscription },
-  // });
 };
 
 module.exports = getCurrentUser;

@@ -1,5 +1,3 @@
-
-
 const jwt = require("jsonwebtoken");
 
 const { User } = require("../../models/user");
@@ -27,7 +25,6 @@ const refresh = async (req, res) => {
       refreshToken,
     });
   } catch (error) {
-    console.log(error);
     if (!error.status) {
       error.status = 401;
     }
