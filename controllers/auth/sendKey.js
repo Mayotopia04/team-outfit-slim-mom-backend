@@ -4,7 +4,6 @@ const { sendEmail } = require("../../helpers");
 const { v4: uuidv4 } = require("uuid");
 
 const sendKey = async (req, res) => {
-  console.log("whywhyhwyhwyhwy");
   const { email } = req.params;
   const key = uuidv4();
   const user = await User.findOneAndUpdate(

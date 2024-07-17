@@ -17,19 +17,11 @@ const ctrl = require("../../controllers");
 
 const router = express.Router();
 
-router.post(
-  "/signup",
-  validateBody(registerSchema),
-  ctrlWrapper(ctrl.register)
-);
+router.post("/signup", validateBody(registerSchema), ctrlWrapper(ctrl.register));
 
 router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
 
-router.post(
-  "/verify",
-  validateBody(resendEmailSchema),
-  ctrlWrapper(ctrl.resendEmail)
-);
+router.post("/verify", validateBody(resendEmailSchema), ctrlWrapper(ctrl.resendEmail));
 
 router.post("/login", validateBody(loginSchema), ctrlWrapper(ctrl.login));
 
@@ -45,10 +37,6 @@ router.get("/key/:email", ctrlWrapper(ctrl.sendKey));
 
 router.get("/verifyKey/:key", ctrlWrapper(ctrl.verifyKey));
 
-router.patch(
-  "/password",
-  validateBody(passwordSchema),
-  ctrlWrapper(ctrl.saveNewPassword)
-);
+router.patch("/password", validateBody(passwordSchema), ctrlWrapper(ctrl.saveNewPassword));
 
 module.exports = router;

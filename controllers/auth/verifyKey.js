@@ -2,7 +2,6 @@ const { httpError } = require("../../helpers");
 const { User } = require("../../models");
 
 const verifyKey = async (req, res) => {
-  console.log("*******");
   const { key } = req.params;
   const user = await User.findOneAndUpdate(
     { key },

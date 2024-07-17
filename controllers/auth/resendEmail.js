@@ -7,22 +7,17 @@ const resendEmail = async (req, res, next) => {
   const { email } = req.body;
 
   try {
-    // Find user by email
     const user = await User.findOne({ email });
 
-    // If user not found, throw 404 error
     if (!user) {
       throw httpError(404, "Email not found");
     }
 
-    // If user is already verified, throw 400 error
     if (user.verify) {
       throw httpError(400, "Verification has already been passed");
     }
 
-    // Prepare email data
 const verificationUrl=`${APP_URL}/api/users/verify/${user?.verificationToken}`;
-    console.log(`Verification URL: ${verificationUrl}`);
 
     const mail = {
       to: email,
@@ -37,15 +32,13 @@ const verificationUrl=`${APP_URL}/api/users/verify/${user?.verificationToken}`;
       `,
     };
 
-    // Send email using sendEmail helper
     await sendEmail(mail);
 
-    // Respond with success message
     res.json({
       message: "Verification email has been sent",
     });
   } catch (error) {
-    next(error); // Pass any errors to the error-handling middleware
+    next(error); 
   }
 };
 
